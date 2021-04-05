@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>设计模式（三）代理模式（待完善） | 九殇的前端进阶笔记</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/my-blog/logo.png">
+    <meta name="description" content="在这里一定有能帮助你成长的文章">
+    
+    <link rel="preload" href="/my-blog/assets/css/0.styles.e03cf7d9.css" as="style"><link rel="preload" href="/my-blog/assets/js/app.16942750.js" as="script"><link rel="preload" href="/my-blog/assets/js/2.a4a101bc.js" as="script"><link rel="preload" href="/my-blog/assets/js/27.7988aae4.js" as="script"><link rel="prefetch" href="/my-blog/assets/js/10.67221003.js"><link rel="prefetch" href="/my-blog/assets/js/11.17504448.js"><link rel="prefetch" href="/my-blog/assets/js/12.c440c1b7.js"><link rel="prefetch" href="/my-blog/assets/js/13.36a9759c.js"><link rel="prefetch" href="/my-blog/assets/js/14.52901fe7.js"><link rel="prefetch" href="/my-blog/assets/js/15.02da56a6.js"><link rel="prefetch" href="/my-blog/assets/js/16.11861541.js"><link rel="prefetch" href="/my-blog/assets/js/17.6701e7f6.js"><link rel="prefetch" href="/my-blog/assets/js/18.8fff8d63.js"><link rel="prefetch" href="/my-blog/assets/js/19.569c5beb.js"><link rel="prefetch" href="/my-blog/assets/js/20.9ac19174.js"><link rel="prefetch" href="/my-blog/assets/js/21.ba1d1748.js"><link rel="prefetch" href="/my-blog/assets/js/22.df3e08ba.js"><link rel="prefetch" href="/my-blog/assets/js/23.64974c3d.js"><link rel="prefetch" href="/my-blog/assets/js/24.d8498150.js"><link rel="prefetch" href="/my-blog/assets/js/25.95a7e6b0.js"><link rel="prefetch" href="/my-blog/assets/js/26.e384fcb0.js"><link rel="prefetch" href="/my-blog/assets/js/28.1c24c4bc.js"><link rel="prefetch" href="/my-blog/assets/js/29.f3478c42.js"><link rel="prefetch" href="/my-blog/assets/js/3.f5277c67.js"><link rel="prefetch" href="/my-blog/assets/js/30.16a69881.js"><link rel="prefetch" href="/my-blog/assets/js/31.e298513c.js"><link rel="prefetch" href="/my-blog/assets/js/32.b38a6437.js"><link rel="prefetch" href="/my-blog/assets/js/33.efb4ba77.js"><link rel="prefetch" href="/my-blog/assets/js/34.0aa3460e.js"><link rel="prefetch" href="/my-blog/assets/js/35.de6c184c.js"><link rel="prefetch" href="/my-blog/assets/js/36.750b0ed3.js"><link rel="prefetch" href="/my-blog/assets/js/37.ccebf9fd.js"><link rel="prefetch" href="/my-blog/assets/js/38.693b1fab.js"><link rel="prefetch" href="/my-blog/assets/js/39.14040020.js"><link rel="prefetch" href="/my-blog/assets/js/4.7ff454be.js"><link rel="prefetch" href="/my-blog/assets/js/5.87cd791f.js"><link rel="prefetch" href="/my-blog/assets/js/6.36f77360.js"><link rel="prefetch" href="/my-blog/assets/js/7.bf4bdbbf.js"><link rel="prefetch" href="/my-blog/assets/js/8.38d9362c.js"><link rel="prefetch" href="/my-blog/assets/js/9.ec1d7803.js">
+    <link rel="stylesheet" href="/my-blog/assets/css/0.styles.e03cf7d9.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/my-blog/" class="home-link router-link-active"><!----> <span class="site-name">九殇的前端进阶笔记</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/my-blog/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/my-blog/blog/" class="nav-link router-link-active">
+  前端|博文
+</a></div><div class="nav-item"><a href="/my-blog/algorithm/" class="nav-link">
+  算法|题解
+</a></div><div class="nav-item"><a href="/my-blog/css/" class="nav-link">
+  CSS|基础
+</a></div><div class="nav-item"><a href="https://github.com/changqingniubi/my-blog" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/my-blog/" class="nav-link">
+  Home
+</a></div><div class="nav-item"><a href="/my-blog/blog/" class="nav-link router-link-active">
+  前端|博文
+</a></div><div class="nav-item"><a href="/my-blog/algorithm/" class="nav-link">
+  算法|题解
+</a></div><div class="nav-item"><a href="/my-blog/css/" class="nav-link">
+  CSS|基础
+</a></div><div class="nav-item"><a href="https://github.com/changqingniubi/my-blog" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  GitHub
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <!----></nav>  <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>JavaScript基础</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>JavaScript专题</span> <span class="arrow right"></span></p> <!----></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>JavaScript设计模式</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/my-blog/blog/js-sjms/1.html" class="sidebar-link">设计模式（一）单例模式</a></li><li><a href="/my-blog/blog/js-sjms/2.html" class="sidebar-link">设计模式（二）策略模式（待完善）</a></li><li><a href="/my-blog/blog/js-sjms/3.html" aria-current="page" class="active sidebar-link">设计模式（三）代理模式（待完善）</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/my-blog/blog/js-sjms/3.html#用高阶函数-动态创建代理" class="sidebar-link">用高阶函数 动态创建代理</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/my-blog/blog/js-sjms/3.html#小结" class="sidebar-link">小结</a></li></ul></li></ul></li><li><a href="/my-blog/blog/js-sjms/4.html" class="sidebar-link">设计模式（四）迭代器模式（待完善）</a></li><li><a href="/my-blog/blog/js-sjms/5.html" class="sidebar-link">设计模式（五）发布-订阅模式（待完善）</a></li><li><a href="/my-blog/blog/js-sjms/6.html" class="sidebar-link">设计模式（六）命令模式（待完善）</a></li></ul></section></li><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading"><span>ES6</span> <span class="arrow right"></span></p> <!----></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="设计模式-三-代理模式-待完善"><a href="#设计模式-三-代理模式-待完善" class="header-anchor">#</a> 设计模式（三）代理模式（待完善）</h1> <p>代理模式，是为一个对象提供一个代用品或占位符，以便控制对它的访问</p> <p>例子：</p> <h3 id="送花第一版"><a href="#送花第一版" class="header-anchor">#</a> 送花第一版</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> <span class="token function-variable function">Flowers</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">val</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>val <span class="token operator">=</span> val<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> xiaoming <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token function-variable function">sendFlower</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">target</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> flower <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Flowers</span><span class="token punctuation">(</span><span class="token string">&quot;玫瑰花&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    target<span class="token punctuation">.</span><span class="token function">recieveFlower</span><span class="token punctuation">(</span>flower<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token constant">A</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token function-variable function">recieveFlower</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">flower</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;我收到了:&quot;</span><span class="token punctuation">,</span> flower<span class="token punctuation">.</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token constant">B</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token function-variable function">recieveFlower</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">flower</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token comment">// todo</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;经过B的手的&quot;</span><span class="token punctuation">,</span> flower<span class="token punctuation">.</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// flower.val = '经过B的手的' + flower.val；</span>
+    <span class="token constant">A</span><span class="token punctuation">.</span><span class="token function">recieveFlower</span><span class="token punctuation">(</span>flower<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+xiaoming<span class="token punctuation">.</span><span class="token function">sendFlower</span><span class="token punctuation">(</span><span class="token constant">B</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>送花第二版</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> <span class="token function-variable function">Flowers</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">val</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">this</span><span class="token punctuation">.</span>val <span class="token operator">=</span> val<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> xiaoming <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token function-variable function">sendFlower</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">target</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">const</span> flower <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Flowers</span><span class="token punctuation">(</span><span class="token string">&quot;玫瑰花&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    target<span class="token punctuation">.</span><span class="token function">recieveFlower</span><span class="token punctuation">(</span>flower<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token constant">A</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token function-variable function">recieveFlower</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">flower</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;我收到了:&quot;</span><span class="token punctuation">,</span> flower<span class="token punctuation">.</span>val<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token function-variable function">listen</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token function">fn</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">3000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> <span class="token constant">B</span> <span class="token operator">=</span> <span class="token punctuation">{</span>
+  <span class="token function-variable function">recieveFlower</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">flower</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token constant">A</span><span class="token punctuation">.</span><span class="token function">listen</span><span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token constant">A</span><span class="token punctuation">.</span><span class="token function">recieveFlower</span><span class="token punctuation">(</span>flower<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">,</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+xiaoming<span class="token punctuation">.</span><span class="token function">sendFlower</span><span class="token punctuation">(</span><span class="token constant">B</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="引申出的-保护代理"><a href="#引申出的-保护代理" class="header-anchor">#</a> 引申出的 保护代理</h3> <p>保护代理在 Js 中并不容易实现</p> <h3 id="引申出的-虚拟代理"><a href="#引申出的-虚拟代理" class="header-anchor">#</a> 引申出的 虚拟代理</h3> <p>实现图片预加载</p> <p>第一版</p> <p>思路：创建一个图片节点，并提供一个可以设置它链接的方法</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> imgWrap <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> oImg <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&quot;img&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  document<span class="token punctuation">.</span>body<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>oImg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    <span class="token function-variable function">setSrc</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">src</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      oImg<span class="token punctuation">.</span>src <span class="token operator">=</span> src<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>设置图片链接的时候，我们如果实现目的呢？</p> <p>第二版</p> <ol><li>创建提前站位的图片</li></ol> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> imgWrap <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> oImg <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">createElement</span><span class="token punctuation">(</span><span class="token string">&quot;img&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  document<span class="token punctuation">.</span>body<span class="token punctuation">.</span><span class="token function">appendChild</span><span class="token punctuation">(</span>oImg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    <span class="token function-variable function">setSrc</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">src</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      oImg<span class="token punctuation">.</span>src <span class="token operator">=</span> src<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> proxyImg <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">const</span> oImg <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Image</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  oImg<span class="token punctuation">.</span><span class="token function-variable function">onload</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    imgWrap<span class="token punctuation">.</span><span class="token function">setSrc</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>src<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> <span class="token punctuation">{</span>
+    <span class="token function-variable function">setSrc</span><span class="token operator">:</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">src</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      imgWrap<span class="token punctuation">.</span><span class="token function">setSrc</span><span class="token punctuation">(</span><span class="token string">&quot;https://avatars3.githubusercontent.com/u/98482&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      oImg<span class="token punctuation">.</span>src <span class="token operator">=</span> src<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+proxyImg<span class="token punctuation">.</span><span class="token function">setSrc</span><span class="token punctuation">(</span><span class="token string">'https://avatars0.githubusercontent.com/u/5877477'</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>代理的意义？</p> <p>为了符合单一职责，本例中，imgWrap 的职责就是插入一张图片，我们增加预加载的代理，但没有影响它的代码结构</p> <h3 id="注意点-代理和本地接口的一致性"><a href="#注意点-代理和本地接口的一致性" class="header-anchor">#</a> 注意点 代理和本地接口的一致性？</h3> <h3 id="虚拟代理-合并-http-请求"><a href="#虚拟代理-合并-http-请求" class="header-anchor">#</a> 虚拟代理 合并 HTTP 请求</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> onInputGroups <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementsByTagName</span><span class="token punctuation">(</span><span class="token string">&quot;input&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> onInputGroups<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> item <span class="token operator">=</span> onInputGroups<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  item<span class="token punctuation">.</span><span class="token function-variable function">onclick</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>checked<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">sendHttp</span><span class="token punctuation">(</span>item<span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>可以预见，每次点击复选框，就会触发一次请求，但当我们可以用时间换请求次数时，加上代理以合并一定时间内的请求会更好</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> onInputGroups <span class="token operator">=</span> document<span class="token punctuation">.</span><span class="token function">getElementsByTagName</span><span class="token punctuation">(</span><span class="token string">&quot;input&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> onInputGroups<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> item <span class="token operator">=</span> onInputGroups<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  item<span class="token punctuation">.</span><span class="token function-variable function">onclick</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">.</span>checked<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+      <span class="token function">proxySendHttp</span><span class="token punctuation">(</span>item<span class="token punctuation">.</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">function</span> <span class="token function">sendHttp</span><span class="token punctuation">(</span><span class="token parameter">id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  console<span class="token punctuation">.</span><span class="token function">log</span><span class="token punctuation">(</span><span class="token string">&quot;发送id:&quot;</span><span class="token punctuation">,</span> id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> proxySendHttp <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  <span class="token keyword">let</span> cache <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// 缓存请求</span>
+  <span class="token keyword">let</span> timer<span class="token punctuation">;</span>
+
+  <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">id</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    cache<span class="token punctuation">.</span><span class="token function">push</span><span class="token punctuation">(</span>id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span>timer<span class="token punctuation">)</span> <span class="token keyword">return</span><span class="token punctuation">;</span>
+    timer <span class="token operator">=</span> <span class="token function">setTimeout</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token punctuation">{</span>
+      <span class="token function">sendHttp</span><span class="token punctuation">(</span>cache<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">(</span><span class="token string">&quot;,&quot;</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">clearTimeout</span><span class="token punctuation">(</span>timer<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      timer <span class="token operator">=</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+      cache <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">,</span> <span class="token number">5000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token punctuation">}</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h3 id="虚拟代理-与-惰性加载"><a href="#虚拟代理-与-惰性加载" class="header-anchor">#</a> 虚拟代理 与 惰性加载</h3> <p>当我们不想一开始就运行或加载某个文件时，可以先用代理创造一个接口一样的对象，将用户的操作先加入缓存，当遇到某个真正执行条件时再去缓存中取，然后调用主体。</p> <h3 id="缓存代理"><a href="#缓存代理" class="header-anchor">#</a> 缓存代理</h3> <p>为一些开销大的的运算结果提供暂时的存储，在下次运算时，如果传递进来的参数和之前的一致，直接返回存储的运算结果</p> <h4 id="_2-1-保存计算结果"><a href="#_2-1-保存计算结果" class="header-anchor">#</a> 2.1 保存计算结果</h4> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> <span class="token function-variable function">mult</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> res <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arguments<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        res <span class="token operator">=</span> res <span class="token operator">*</span> arguments<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> proxtMult <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> cache <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> arg <span class="token operator">=</span> <span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arguments<span class="token punctuation">,</span> <span class="token string">','</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>cache<span class="token punctuation">[</span>arg<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token function">mult</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> arguments<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            cache<span class="token punctuation">[</span>arg<span class="token punctuation">]</span> <span class="token operator">=</span> res<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> cache<span class="token punctuation">[</span>arg<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><h4 id="用于ajax异步请求数据"><a href="#用于ajax异步请求数据" class="header-anchor">#</a> 用于ajax异步请求数据</h4> <p>道理同上</p> <h2 id="用高阶函数-动态创建代理"><a href="#用高阶函数-动态创建代理" class="header-anchor">#</a> 用高阶函数 动态创建代理</h2> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> <span class="token function-variable function">mult</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> res <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arguments<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        res <span class="token operator">=</span> res <span class="token operator">*</span> arguments<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">add</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> res <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">let</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> arguments<span class="token punctuation">.</span>length<span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        res <span class="token operator">+=</span> arguments<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+    <span class="token keyword">return</span> res<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">const</span> <span class="token function-variable function">proxyFun</span> <span class="token operator">=</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token parameter">fn</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token keyword">let</span> cache <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token keyword">function</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">const</span> arg <span class="token operator">=</span> <span class="token class-name">Array</span><span class="token punctuation">.</span>prototype<span class="token punctuation">.</span><span class="token function">join</span><span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span>arguments<span class="token punctuation">,</span> <span class="token string">','</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">!</span>cache<span class="token punctuation">[</span>arg<span class="token punctuation">]</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token keyword">const</span> res <span class="token operator">=</span> <span class="token function">fn</span><span class="token punctuation">.</span><span class="token function">apply</span><span class="token punctuation">(</span><span class="token keyword">this</span><span class="token punctuation">,</span> arguments<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            cache<span class="token punctuation">[</span>arg<span class="token punctuation">]</span> <span class="token operator">=</span> res<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">return</span> cache<span class="token punctuation">[</span>arg<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+
+<span class="token keyword">const</span> proxyMult <span class="token operator">=</span> <span class="token function">proxyFun</span><span class="token punctuation">(</span>mult<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">const</span> proxyAdd <span class="token operator">=</span> <span class="token function">proxyFun</span><span class="token punctuation">(</span>add<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token function">proxyMult</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span>
+<span class="token function">proxyAdd</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span><span class="token number">2</span><span class="token punctuation">,</span><span class="token number">3</span><span class="token punctuation">)</span>
+</code></pre></div><h3 id="小结"><a href="#小结" class="header-anchor">#</a> 小结</h3> <p>防火墙代理
+远程代理
+保护代理
+智能引用代理
+写时复制代理</p> <p>代理模式包括许多小分类，在 JavaScript 开发中最常用的是虚拟代理和缓存代理。虽然代理
+模式非常有用，但我们在编写业务代码的时候，往往不需要去预先猜测是否需要使用代理模式。
+当真正发现不方便直接访问某个对象的时候，再编写代理也不迟。</p></div> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/my-blog/blog/js-sjms/2.html" class="prev">
+        设计模式（二）策略模式（待完善）
+      </a></span> <span class="next"><a href="/my-blog/blog/js-sjms/4.html">
+        设计模式（四）迭代器模式（待完善）
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"></div></div>
+    <script src="/my-blog/assets/js/app.16942750.js" defer></script><script src="/my-blog/assets/js/2.a4a101bc.js" defer></script><script src="/my-blog/assets/js/27.7988aae4.js" defer></script>
+  </body>
+</html>
